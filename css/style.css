@@ -7,6 +7,7 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
+    font-family: Silkscreen, cursive;
 }
 
 #main-grid {
@@ -18,4 +19,10 @@ body {
 
 .outer-grid-container {
     border: 2px solid red;
+    box-sizing: content-box;
+}
+
+#settings-panel {
+    border: 2px solid blue;
+    box-sizing: content-box;
 }
