@@ -8,6 +8,7 @@ body {
     display: flex;
     justify-content: center;
     font-family: Silkscreen, cursive;
+    align-items: center;
 }
 
 #main-grid {
@@ -30,10 +31,10 @@ body {
     row-gap: 16px;
 }
 
-button {
+button:not(.btn-group-btn) {
     width: 50%;
     border-radius: 10px;
-    border: 2px solid black;
+    border: 2px solid #000000;
     font-family: Silkscreen, cursive;
 }
 
@@ -49,10 +50,37 @@ button {
 
 #random-mode-btn {
     background: #ffffff;
-    color: black;
+    color: #000000;
 }
 
-button:hover {
+button:not(.btn-group-btn):hover {
     cursor: pointer;
     box-shadow: 4px 4px 2px rgb(220, 220, 220);
 }
+
+
+.btn-group {
+    display: flex;
+}
+
+.btn-group-btn {
+    font-family: Silkscreen, cursive;
+    border: 1px solid black; 
+    padding: 10px 24px; 
+    cursor: pointer; 
+}
+
+.btn-group-btn:first-child {
+    background-color: rgb(100, 100, 100);
+    color: white;
+    border-start-start-radius: 20px;
+    border-end-start-radius: 20px;
+}
+
+.btn-group-btn:last-child {
+    background-color: rgb(230, 230, 230);
+    color: black;
+    border-end-end-radius: 20px;
+    border-start-end-radius: 20px;
+}
+

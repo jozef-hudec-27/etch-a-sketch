@@ -15,11 +15,13 @@ const settingsPanelEl = document.getElementById('settings-panel')
 settingsPanelEl.style.height = `${MAIN_GRID_WIDTH}px`;
 settingsPanelEl.style.width = `${MAIN_GRID_WIDTH/3}px`;
 
-let penColor = 'black';
+let penColor = '#000000';
 let bgColor = '#ffffff';
 let isErasing = false;
 let isGrabbingColor = false;
 let randomColorMode = false;
+let isShading = false;
+let isLightening = false;
 
 let tiles;
 const tileBorderCheck = document.getElementById('toggle-tile-border')
@@ -31,7 +33,7 @@ tileBorderCheck.addEventListener('change', e => {
     let check = e.target.checked
 
     Array.from(tiles).forEach(tile => {
-        tile.style.border = check ? '1px solid black' : ''
+        tile.style.border = check ? '1px solid #000000' : ''
     })
 })
 
@@ -80,7 +82,7 @@ eraserBtn.addEventListener('click', () => {
 
     if (isErasing) {
         eraserBtn.style.backgroundColor = 'lightgreen'
-        eraserBtn.style.color = 'black'
+        eraserBtn.style.color = '#000000'
     } else {
         eraserBtn.style.backgroundColor = 'red'
         eraserBtn.style.color = '#ffffff'
@@ -94,7 +96,7 @@ colorGrabberBtn.addEventListener('click', () => {
 
     if (isGrabbingColor) {
         colorGrabberBtn.style.backgroundColor = 'lightgreen'
-        colorGrabberBtn.style.color = 'black'
+        colorGrabberBtn.style.color = '#000000'
     } else {
         colorGrabberBtn.style.backgroundColor = 'red'
         colorGrabberBtn.style.color = '#ffffff'
@@ -111,18 +113,49 @@ clearGridBtn.addEventListener('click', () => {
 
 const randomModeBtn = document.getElementById('random-mode-btn')
 randomModeBtn.addEventListener('click', () => {
+    isShading = false; shadeBtn.style.backgroundColor = 'rgb(100, 100, 100)';
+    isLightening = false; lightenBtn.style.backgroundColor = 'rgb(230, 230, 230)';
+
     randomColorMode = !randomColorMode;
 
     if (randomColorMode) {
         randomModeBtn.style.background = "linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%,\
                                                                  rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%,\
                                                                  rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%,\
-                                                                 rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%)"
+                                                                 rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%)";
     } else {
-        randomModeBtn.style.background = '#ffffff'
+        randomModeBtn.style.background = '#ffffff';
     };
 });
 
+const shadeBtn = document.querySelector('.shade');
+const lightenBtn = document.querySelector('.lighten');
+
+shadeBtn.addEventListener('click', () => {
+    isShading = !isShading;
+    isLightening = false;
+
+    if (isShading) {
+        shadeBtn.style.backgroundColor = 'rgb(0, 0, 0)';
+    } else {
+        shadeBtn.style.backgroundColor = 'rgb(100, 100, 100)';
+    };
+
+    lightenBtn.style.backgroundColor = 'rgb(230, 230, 230)';
+});
+
+lightenBtn.addEventListener('click', () => {
+    isLightening = !isLightening;
+    isShading = false;
+
+    if (isLightening) {
+        lightenBtn.style.backgroundColor = 'rgb(255, 255, 255)'
+    } else {
+        lightenBtn.style.backgroundColor = 'rgb(230, 230, 230)';
+    };
+
+    shadeBtn.style.backgroundColor = 'rgb(100, 100, 100)';
+});
 
 createTiles(gridHeight, newSquareWidth);
 
@@ -132,21 +165,37 @@ function createTiles(gridHeight, squareWidth) {
         let newSquare = document.createElement('div');
         newSquare.style.width = `${squareWidth}px`;
         newSquare.style.height = `${squareWidth}px`;
-        newSquare.style.border = tileBorderCheck.checked && '1px solid black';
+        newSquare.style.border = tileBorderCheck.checked && '1px solid #000000';
         newSquare.style.backgroundColor = bgColor
         newSquare.classList.add('tile')
     
         newSquare.addEventListener('mouseover', (e) => {
             if (e.buttons && !isGrabbingColor) {
-                newSquare.style.backgroundColor = isErasing ? bgColor : randomColorMode ? getRandomHexColor() : penColor;
+                if (isShading) {
+                    shadeSquare(newSquare);
+                } else if (isLightening) {
+                    lightenSquare(newSquare)
+                } else {
+                    newSquare.style.backgroundColor = isErasing ? bgColor : randomColorMode ? getRandomHexColor() : penColor;
+                };
             };
         });
     
         newSquare.addEventListener('mousedown', () => {
-            if (!isGrabbingColor) newSquare.style.backgroundColor = isErasing ? bgColor : randomColorMode ? getRandomHexColor() : penColor;
+            if (!isGrabbingColor) {
+                if (isShading) {
+                    shadeSquare(newSquare);
+                } else if (isLightening) {
+                    lightenSquare(newSquare)
+                } else {
+                    newSquare.style.backgroundColor = isErasing ? bgColor : randomColorMode ? getRandomHexColor() : penColor;
+                };
+            }
         });
 
         newSquare.addEventListener('click', () => {
+            console.dir(newSquare)
+
             if (isGrabbingColor) {
                 penColor = newSquare.style.backgroundColor;
 
@@ -180,4 +229,25 @@ function componentToHex(c) {
 function rgbToHex(r, g, b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 };
-  
+
+function shadeSquare(squareNode) {
+    const currentColor = squareNode.style.backgroundColor
+
+    let x = currentColor.split(' ')
+    let r = +x[0].slice(4, x[0].length - 1) - 10 || 0;
+    let g = +x[1].slice(0, x[1].length - 1) - 10 || 0;
+    let b = +x[2].slice(0, x[2].length - 1) - 10 || 0;
+
+    squareNode.style.backgroundColor = `rgb(${r > 0 ? r : 0}, ${g > 0 ? g : 0}, ${b > 0 ? b : 0})`
+};
+
+function lightenSquare(squareNode) {
+    const currentColor = squareNode.style.backgroundColor
+
+    let x = currentColor.split(' ')
+    let r = +x[0].slice(4, x[0].length - 1) + 10 ;
+    let g = +x[1].slice(0, x[1].length - 1) + 10;
+    let b = +x[2].slice(0, x[2].length - 1) + 10;
+
+    squareNode.style.backgroundColor = `rgb(${r < 255 ? r : 255}, ${g < 255 ? g : 255}, ${b < 255 ? b : 255})`
+};
