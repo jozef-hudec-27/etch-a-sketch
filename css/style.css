@@ -30,16 +30,29 @@ body {
     row-gap: 16px;
 }
 
-#eraser-btn {
+#eraser-btn, #clear-grid-btn, #random-mode-btn {
     width: 50%;
-    background-color: blue;
-    border: 2px solid black;
     border-radius: 10px;
+    border: 2px solid black;
     font-family: Silkscreen, cursive;
+}
+
+#eraser-btn {
+    background-color: red;
     color: white;
 }
 
-#eraser-btn:hover {
+
+#clear-grid-btn {
+    background-color: white;
+}
+
+#random-mode-btn {
+    background: white;
+    color: black;
+}
+
+#eraser-btn:hover, #clear-grid-btn:hover, #random-mode-btn:hover {
     cursor: pointer;
     box-shadow: 4px 4px 2px rgb(220, 220, 220);
 }
