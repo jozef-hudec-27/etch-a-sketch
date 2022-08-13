@@ -32,6 +32,7 @@ tileBorderCheck.addEventListener('change', e => {
 })
 
 const gridSizePicker = document.getElementById('grid-size-range');
+const currentGridSizeText = document.getElementById('cur-grid-size')
 gridSizePicker.addEventListener('change', e => {
     let newGridHeight = e.target.value;
 
@@ -44,6 +45,10 @@ gridSizePicker.addEventListener('change', e => {
     });
 
     createTiles(gridHeight, newSquareWidth)
+});
+gridSizePicker.addEventListener('input', e => {
+    let newSize = e.target.value
+    currentGridSizeText.textContent = `${newSize}x${newSize}`
 });
 
 const penColorPicker = document.getElementById('pen-color-picker')
