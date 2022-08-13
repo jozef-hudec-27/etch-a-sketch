@@ -16,8 +16,9 @@ settingsPanelEl.style.height = `${MAIN_GRID_WIDTH}px`;
 settingsPanelEl.style.width = `${MAIN_GRID_WIDTH/3}px`;
 
 let penColor = 'black';
-let bgColor = 'white';
+let bgColor = '#ffffff';
 let isErasing = false;
+let isGrabbingColor = false;
 let randomColorMode = false;
 
 let tiles;
@@ -82,8 +83,21 @@ eraserBtn.addEventListener('click', () => {
         eraserBtn.style.color = 'black'
     } else {
         eraserBtn.style.backgroundColor = 'red'
-        eraserBtn.style.color = 'white'
+        eraserBtn.style.color = '#ffffff'
         
+    };
+});
+
+const colorGrabberBtn = document.getElementById('color-grabber-btn');
+colorGrabberBtn.addEventListener('click', () => {
+    isGrabbingColor = !isGrabbingColor
+
+    if (isGrabbingColor) {
+        colorGrabberBtn.style.backgroundColor = 'lightgreen'
+        colorGrabberBtn.style.color = 'black'
+    } else {
+        colorGrabberBtn.style.backgroundColor = 'red'
+        colorGrabberBtn.style.color = '#ffffff'
     };
 });
 
@@ -105,7 +119,7 @@ randomModeBtn.addEventListener('click', () => {
                                                                  rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%,\
                                                                  rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%)"
     } else {
-        randomModeBtn.style.background = 'white'
+        randomModeBtn.style.background = '#ffffff'
     };
 });
 
@@ -123,13 +137,29 @@ function createTiles(gridHeight, squareWidth) {
         newSquare.classList.add('tile')
     
         newSquare.addEventListener('mouseover', (e) => {
-            if (e.buttons) {
+            if (e.buttons && !isGrabbingColor) {
                 newSquare.style.backgroundColor = isErasing ? bgColor : randomColorMode ? getRandomHexColor() : penColor;
-            }
+            };
         });
     
         newSquare.addEventListener('mousedown', () => {
-            newSquare.style.backgroundColor = isErasing ? bgColor : randomColorMode ? getRandomHexColor() : penColor;
+            if (!isGrabbingColor) newSquare.style.backgroundColor = isErasing ? bgColor : randomColorMode ? getRandomHexColor() : penColor;
+        });
+
+        newSquare.addEventListener('click', () => {
+            if (isGrabbingColor) {
+                penColor = newSquare.style.backgroundColor;
+
+                let x = penColor.split(' ')
+                let r = x[0].slice(4, x[0].length - 1);
+                let g = x[1].slice(0, x[1].length - 1);
+                let b = x[2].slice(0, x[2].length - 1);
+
+                penColorPicker.value = rgbToHex(+r, +g, +b);
+                isGrabbingColor = false;
+                colorGrabberBtn.style.backgroundColor = 'red'
+                colorGrabberBtn.style.color = '#ffffff'
+            };
         });
     
         gridEl.appendChild(newSquare);
@@ -141,3 +171,13 @@ function createTiles(gridHeight, squareWidth) {
 function getRandomHexColor() {
     return '#' + Math.floor(Math.random()*16777215).toString(16);
 };
+
+function componentToHex(c) {
+    let hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+};
+
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+};
+  
