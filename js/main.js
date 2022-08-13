@@ -16,6 +16,8 @@ settingsPanelEl.style.height = `${MAIN_GRID_WIDTH}px`;
 settingsPanelEl.style.width = `${MAIN_GRID_WIDTH/3}px`;
 
 let penColor = 'black';
+let bgColor = 'white';
+let isErasing = false;
 
 let tiles;
 const tileBorderCheck = document.getElementById('toggle-tile-border')
@@ -44,21 +46,43 @@ gridSizePicker.addEventListener('change', e => {
         tile.parentNode.removeChild(tile);
     });
 
-    createTiles(gridHeight, newSquareWidth)
+    createTiles(gridHeight, newSquareWidth);
 });
 gridSizePicker.addEventListener('input', e => {
-    let newSize = e.target.value
-    currentGridSizeText.textContent = `${newSize}x${newSize}`
+    let newSize = e.target.value;
+    currentGridSizeText.textContent = `${newSize}x${newSize}`;
 });
 
-const penColorPicker = document.getElementById('pen-color-picker')
+const penColorPicker = document.getElementById('pen-color-picker');
 penColorPicker.addEventListener('change', e => {
-    const newPenColor = e.target.value
-    penColor = newPenColor
-})
+    const newPenColor = e.target.value;
+    penColor = newPenColor;
+});
+
+const bgColorPicker = document.getElementById('bg-color-picker');
+bgColorPicker.addEventListener('input', e => {
+    const newBgColor = e.target.value
+    bgColor = newBgColor
+
+    const currentTiles = document.getElementsByClassName('tile') ;
+    Array.from(currentTiles).forEach(tile => {
+        tile.style.backgroundColor = newBgColor;
+    });
+});
+
+const eraserBtn = document.getElementById('eraser-btn');
+eraserBtn.addEventListener('click', () => {
+    isErasing = !isErasing;
+
+    if (isErasing) {
+        eraserBtn.style.backgroundColor = 'red'
+    } else {
+        eraserBtn.style.backgroundColor = 'blue'
+    };
+});
 
 
-createTiles(gridHeight, newSquareWidth)
+createTiles(gridHeight, newSquareWidth);
 
 
 function createTiles(gridHeight, squareWidth) {
@@ -67,16 +91,17 @@ function createTiles(gridHeight, squareWidth) {
         newSquare.style.width = `${squareWidth}px`;
         newSquare.style.height = `${squareWidth}px`;
         newSquare.style.border = tileBorderCheck.checked && '1px solid black';
+        newSquare.style.backgroundColor = bgColor
         newSquare.classList.add('tile')
     
         newSquare.addEventListener('mouseover', (e) => {
             if (e.buttons) {
-                newSquare.style.backgroundColor = penColor;
+                newSquare.style.backgroundColor = isErasing ? bgColor : penColor;
             }
         });
     
         newSquare.addEventListener('mousedown', () => {
-            newSquare.style.backgroundColor = penColor;
+            newSquare.style.backgroundColor = isErasing ? bgColor : penColor;
         });
     
         gridEl.appendChild(newSquare);

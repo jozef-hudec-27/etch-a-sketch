@@ -29,3 +29,17 @@ body {
     flex-direction: column;
     row-gap: 16px;
 }
+
+#eraser-btn {
+    width: 50%;
+    background-color: blue;
+    border: 2px solid black;
+    border-radius: 10px;
+    font-family: Silkscreen, cursive;
+    color: white;
+}
+
+#eraser-btn:hover {
+    cursor: pointer;
+    box-shadow: 4px 4px 2px rgb(220, 220, 220);
+}
