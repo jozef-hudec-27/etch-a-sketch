@@ -1,5 +1,9 @@
 const MAIN_GRID_WIDTH = 600;
 
+let gridHeight = 16;
+let newSquareWidth = MAIN_GRID_WIDTH / gridHeight; 
+gridHeight *= gridHeight;
+
 const outerGridContainerEl = document.querySelector('.outer-grid-container');
 outerGridContainerEl.style.height = `${MAIN_GRID_WIDTH}px`;
 
@@ -15,7 +19,7 @@ let tiles;
 const tileBorderCheck = document.getElementById('toggle-tile-border')
 tileBorderCheck.addEventListener('change', e => {
     if (!tiles) {
-        tiles = document.getElementsByClassName('tile') 
+        tiles = document.getElementsByClassName('tile'); 
     };
 
     let check = e.target.checked
@@ -25,30 +29,45 @@ tileBorderCheck.addEventListener('change', e => {
     })
 })
 
-let gridSize = +prompt('How big do you want the grid to be?') || 8;
+const gridSizePicker = document.getElementById('grid-size-range');
+gridSizePicker.addEventListener('change', e => {
+    let newGridHeight = e.target.value;
 
-const newSquareWidth = MAIN_GRID_WIDTH / gridSize; 
+    newSquareWidth = MAIN_GRID_WIDTH / newGridHeight
+    gridHeight = newGridHeight ** 2
 
-gridSize *= gridSize;
+    const currentTiles = document.getElementsByClassName('tile') 
+    Array.from(currentTiles).forEach(tile => {
+        tile.parentNode.removeChild(tile);
+    });
 
-while (gridSize > 0) {
-    let newSquare = document.createElement('div');
-    newSquare.style.width = `${newSquareWidth}px`;
-    newSquare.style.height = `${newSquareWidth}px`;
-    newSquare.style.border = '1px solid black';
-    newSquare.classList.add('tile')
+    createTiles(gridHeight, newSquareWidth)
+});
 
-    newSquare.addEventListener('mouseover', (e) => {
-        if (e.buttons) {
+
+createTiles(gridHeight, newSquareWidth)
+
+
+function createTiles(gridHeight, squareWidth) {
+    while (gridHeight > 0) {
+        let newSquare = document.createElement('div');
+        newSquare.style.width = `${squareWidth}px`;
+        newSquare.style.height = `${squareWidth}px`;
+        newSquare.style.border = tileBorderCheck.checked && '1px solid black';
+        newSquare.classList.add('tile')
+    
+        newSquare.addEventListener('mouseover', (e) => {
+            if (e.buttons) {
+                newSquare.style.backgroundColor = 'black';
+            }
+        });
+    
+        newSquare.addEventListener('mousedown', () => {
             newSquare.style.backgroundColor = 'black';
-        }
-    });
-
-    newSquare.addEventListener('mousedown', () => {
-        newSquare.style.backgroundColor = 'black';
-    });
-
-    gridEl.appendChild(newSquare);
-
-    gridSize--;
+        });
+    
+        gridEl.appendChild(newSquare);
+    
+        gridHeight--;
+    };
 };

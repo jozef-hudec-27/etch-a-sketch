@@ -15,8 +15,17 @@
 </head>
 <body>
     <div id="settings-panel">
-        <label for="toggle-tile-border">Show tile border</label>
-        <input type="checkbox" id="toggle-tile-border" name="toggle-tile-border" checked>
+        <label for="toggle-tile-border">Show tile border
+            <input type="checkbox" id="toggle-tile-border" checked>
+        </label>
+
+        <label for="grid-size-range">Grid size
+            <input type="range" id="grid-size-range" min="1" max="64" value="16">
+        </label>
+
+        <label for="pen-color-picker">Pen color
+            <input type="color" id="pen-color-picker">
+        </label>
     </div>
 
     <div class="outer-grid-container">

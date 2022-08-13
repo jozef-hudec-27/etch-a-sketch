@@ -25,4 +25,7 @@ body {
 #settings-panel {
     border: 2px solid blue;
     box-sizing: content-box;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
 }
