@@ -1,4 +1,4 @@
-const MAIN_GRID_WIDTH = 600;
+const MAIN_GRID_WIDTH = 700;
 
 let gridHeight = 16;
 let newSquareWidth = MAIN_GRID_WIDTH / gridHeight; 
@@ -14,6 +14,8 @@ gridEl.style.height = `${MAIN_GRID_WIDTH}px`;
 const settingsPanelEl = document.getElementById('settings-panel')
 settingsPanelEl.style.height = `${MAIN_GRID_WIDTH}px`;
 settingsPanelEl.style.width = `${MAIN_GRID_WIDTH/3}px`;
+
+let penColor = 'black';
 
 let tiles;
 const tileBorderCheck = document.getElementById('toggle-tile-border')
@@ -44,6 +46,12 @@ gridSizePicker.addEventListener('change', e => {
     createTiles(gridHeight, newSquareWidth)
 });
 
+const penColorPicker = document.getElementById('pen-color-picker')
+penColorPicker.addEventListener('change', e => {
+    const newPenColor = e.target.value
+    penColor = newPenColor
+})
+
 
 createTiles(gridHeight, newSquareWidth)
 
@@ -58,12 +66,12 @@ function createTiles(gridHeight, squareWidth) {
     
         newSquare.addEventListener('mouseover', (e) => {
             if (e.buttons) {
-                newSquare.style.backgroundColor = 'black';
+                newSquare.style.backgroundColor = penColor;
             }
         });
     
         newSquare.addEventListener('mousedown', () => {
-            newSquare.style.backgroundColor = 'black';
+            newSquare.style.backgroundColor = penColor;
         });
     
         gridEl.appendChild(newSquare);
