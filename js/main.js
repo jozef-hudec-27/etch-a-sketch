@@ -1,5 +1,14 @@
 const MAIN_GRID_WIDTH = 650;
 
+const BLACK = '#000000'
+const WHITE = '#ffffff'
+const GREENYELLOW = '#adff2f'
+const RED = '#ff0000'
+const LIGHTGREEN = '#90ee90'
+const LIGHTGREY_RGB = 'rgb(230, 230, 230)'
+const DARKGEY_RGB = 'rgb(100, 100, 100)'
+
+
 let gridHeight = 16;
 let newSquareWidth = MAIN_GRID_WIDTH / gridHeight;  
 gridHeight *= gridHeight;
@@ -12,8 +21,8 @@ const settingsPanelEl = document.getElementById('settings-panel')
 settingsPanelEl.style.height = `${MAIN_GRID_WIDTH}px`;
 settingsPanelEl.style.width = `${MAIN_GRID_WIDTH/3}px`;
 
-let penColor = '#000000';
-let bgColor = '#ffffff';
+let penColor = BLACK;
+let bgColor = WHITE;
 let isErasing = false;
 let isGrabbingColor = false;
 let randomColorMode = false;
@@ -30,7 +39,7 @@ tileBorderCheck.addEventListener('change', e => {
     let check = e.target.checked
 
     Array.from(tiles).forEach(tile => {
-        tile.style.border = check ? '1px solid #000000' : ''
+        tile.style.border = check ? `1px solid ${BLACK}` : ''
     })
 })
 
@@ -78,11 +87,11 @@ eraserBtn.addEventListener('click', () => {
     isErasing = !isErasing;
 
     if (isErasing) {
-        eraserBtn.style.backgroundColor = 'lightgreen'
-        eraserBtn.style.color = '#000000'
+        eraserBtn.style.backgroundColor = LIGHTGREEN
+        eraserBtn.style.color = BLACK
     } else {
-        eraserBtn.style.backgroundColor = 'red'
-        eraserBtn.style.color = '#ffffff'
+        eraserBtn.style.backgroundColor = RED
+        eraserBtn.style.color = WHITE
         
     };
 });
@@ -92,11 +101,11 @@ colorGrabberBtn.addEventListener('click', () => {
     isGrabbingColor = !isGrabbingColor
 
     if (isGrabbingColor) {
-        colorGrabberBtn.style.backgroundColor = 'lightgreen'
-        colorGrabberBtn.style.color = '#000000'
+        colorGrabberBtn.style.backgroundColor = LIGHTGREEN
+        colorGrabberBtn.style.color = BLACK
     } else {
-        colorGrabberBtn.style.backgroundColor = 'red'
-        colorGrabberBtn.style.color = '#ffffff'
+        colorGrabberBtn.style.backgroundColor = RED
+        colorGrabberBtn.style.color = WHITE
     };
 });
 
@@ -110,8 +119,8 @@ clearGridBtn.addEventListener('click', () => {
 
 const randomModeBtn = document.getElementById('random-mode-btn')
 randomModeBtn.addEventListener('click', () => {
-    isShading = false; shadeBtn.style.backgroundColor = 'rgb(100, 100, 100)';
-    isLightening = false; lightenBtn.style.backgroundColor = 'rgb(230, 230, 230)';
+    isShading = false; shadeBtn.style.backgroundColor = DARKGEY_RGB;
+    isLightening = false; lightenBtn.style.backgroundColor = LIGHTGREY_RGB;
 
     randomColorMode = !randomColorMode;
 
@@ -120,10 +129,10 @@ randomModeBtn.addEventListener('click', () => {
                                                                  rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%,\
                                                                  rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%,\
                                                                  rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%)";
-        randomModeBtn.style.color = '#ffffff'
+        randomModeBtn.style.color = WHITE
     } else {
-        randomModeBtn.style.background = '#adff2f';
-        randomModeBtn.style.color = '#000000'
+        randomModeBtn.style.background = GREENYELLOW;
+        randomModeBtn.style.color = BLACK
     };
 });
 
@@ -137,10 +146,10 @@ shadeBtn.addEventListener('click', () => {
     if (isShading) {
         shadeBtn.style.backgroundColor = 'rgb(0, 0, 0)';
     } else {
-        shadeBtn.style.backgroundColor = 'rgb(100, 100, 100)';
+        shadeBtn.style.backgroundColor = DARKGEY_RGB;
     };
 
-    lightenBtn.style.backgroundColor = 'rgb(230, 230, 230)';
+    lightenBtn.style.backgroundColor = LIGHTGREY_RGB;
 });
 
 lightenBtn.addEventListener('click', () => {
@@ -150,10 +159,10 @@ lightenBtn.addEventListener('click', () => {
     if (isLightening) {
         lightenBtn.style.backgroundColor = 'rgb(255, 255, 255)'
     } else {
-        lightenBtn.style.backgroundColor = 'rgb(230, 230, 230)';
+        lightenBtn.style.backgroundColor = LIGHTGREY_RGB;
     };
 
-    shadeBtn.style.backgroundColor = 'rgb(100, 100, 100)';
+    shadeBtn.style.backgroundColor = DARKGEY_RGB;
 });
 
 createTiles(gridHeight, newSquareWidth);
@@ -164,7 +173,7 @@ function createTiles(gridHeight, squareWidth) {
         let newSquare = document.createElement('div');
         newSquare.style.width = `${squareWidth}px`;
         newSquare.style.height = `${squareWidth}px`;
-        newSquare.style.border = tileBorderCheck.checked && '1px solid #000000';
+        newSquare.style.border = tileBorderCheck.checked && `1px solid ${BLACK}`;
         newSquare.style.backgroundColor = bgColor
         newSquare.classList.add('tile')
     
@@ -205,8 +214,8 @@ function createTiles(gridHeight, squareWidth) {
 
                 penColorPicker.value = rgbToHex(+r, +g, +b);
                 isGrabbingColor = false;
-                colorGrabberBtn.style.backgroundColor = 'red'
-                colorGrabberBtn.style.color = '#ffffff'
+                colorGrabberBtn.style.backgroundColor = RED
+                colorGrabberBtn.style.color = WHITE
             };
         });
     
