@@ -69,6 +69,7 @@ button, input[type="range"], input[type="color"] {
 
 #clear-grid-btn {
     background-color: #ffffff;
+    color: #000000;
 }
 
 #random-mode-btn {

@@ -73,8 +73,16 @@ const bgColorPicker = document.getElementById('bg-color-picker');
 bgColorPicker.addEventListener('input', e => {
     const newBgColor = e.target.value;
     bgColor = newBgColor;
+    
+    const clearGridBtn = document.getElementById('clear-grid-btn')
+    
+    const colorRatio = calculateColorRatio(bgColor, clearGridBtn.style.color)
 
-    document.getElementById('clear-grid-btn').style.backgroundColor = bgColor;
+    if (colorRatio >= 0.22) { // it's at a bad level
+        clearGridBtn.style.color = clearGridBtn.style.color === 'rgb(0, 0, 0)' ? WHITE : BLACK;
+    };
+
+    clearGridBtn.style.backgroundColor = bgColor;
 
     const currentTiles = document.getElementsByClassName('tile') ;
     Array.from(currentTiles).forEach(tile => {
@@ -205,10 +213,7 @@ function createTiles(gridHeight, squareWidth) {
             if (isGrabbingColor) {
                 penColor = newSquare.style.backgroundColor;
 
-                let x = penColor.split(' ');
-                let r = x[0].slice(4, x[0].length - 1);
-                let g = x[1].slice(0, x[1].length - 1);
-                let b = x[2].slice(0, x[2].length - 1);
+                let { r, g, b } = extractRgb(penColor)
 
                 penColorPicker.value = rgbToHex(+r, +g, +b);
                 isGrabbingColor = false;
@@ -239,10 +244,8 @@ function rgbToHex(r, g, b) {
 function shadeSquare(squareNode) {
     const currentColor = squareNode.style.backgroundColor;
 
-    let x = currentColor.split(' ');
-    let r = +x[0].slice(4, x[0].length - 1) - 10 || 0;
-    let g = +x[1].slice(0, x[1].length - 1) - 10 || 0;
-    let b = +x[2].slice(0, x[2].length - 1) - 10 || 0;
+    let { r, g, b } = extractRgb(currentColor)
+    r -= 10; g -= 10; b -= 10;
 
     squareNode.style.backgroundColor = `rgb(${r > 0 ? r : 0}, ${g > 0 ? g : 0}, ${b > 0 ? b : 0})`;
 };
@@ -250,10 +253,65 @@ function shadeSquare(squareNode) {
 function lightenSquare(squareNode) {
     const currentColor = squareNode.style.backgroundColor;
 
-    let x = currentColor.split(' ');
-    let r = +x[0].slice(4, x[0].length - 1) + 10 ;
-    let g = +x[1].slice(0, x[1].length - 1) + 10;
-    let b = +x[2].slice(0, x[2].length - 1) + 10;
+    let { r, g, b } = extractRgb(currentColor)
+    r += 10; g += 10; b += 10;
 
     squareNode.style.backgroundColor = `rgb(${r < 255 ? r : 255}, ${g < 255 ? g : 255}, ${b < 255 ? b : 255})`;
+};
+
+function hexToRgb(hex) {
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+      return r + r + g + g + b + b;
+    });
+  
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+};
+
+function getColorLuminance(r, g, b) {
+    var a = [r, g, b].map(function (v) {
+        v /= 255;
+        return v <= 0.03928
+            ? v / 12.92
+            : Math.pow( (v + 0.055) / 1.055, 2.4 );
+    });
+    return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+};
+
+function getColorRatio(c1Luminance, c2Luminance) {
+    const ratio = c1Luminance > c2Luminance 
+    ? ((c2Luminance + 0.05) / (c1Luminance + 0.05))
+    : ((c1Luminance + 0.05) / (c2Luminance + 0.05));
+
+    return ratio;
+};
+
+function extractRgb(rgbStr) {
+    if (!rgbStr || rgbStr.slice(0, 3) !== 'rgb') {
+        return rgbStr;
+    };
+
+    let x = rgbStr.split(' ');
+    let r = +x[0].slice(4, x[0].length - 1) || 0;
+    let g = +x[1].slice(0, x[1].length - 1) || 0;
+    let b = +x[2].slice(0, x[2].length - 1) || 0;
+
+    return { r: r, g: g, b: b };
+};
+
+function calculateColorRatio(c1, c2) {
+    const c1Rgb = c1.slice(0, 3) === 'rgb' ? extractRgb(c1) : hexToRgb(c1 || BLACK);
+    const c2Rgb = c2.slice(0, 3) === 'rgb' ? extractRgb(c2) : hexToRgb(c2 || BLACK);
+
+    const c1Luminance = getColorLuminance(c1Rgb.r, c1Rgb.g, c1Rgb.b);
+    const c2Luminance = getColorLuminance(c2Rgb.r, c2Rgb.g, c2Rgb.b);
+
+    const colorRatio = getColorRatio(c1Luminance, c2Luminance);
+
+    return colorRatio;
 };
