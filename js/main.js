@@ -131,7 +131,7 @@ randomModeBtn.addEventListener('click', () => {
                                                                  rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%)";
         randomModeBtn.style.color = WHITE;
     } else {
-        randomModeBtn.style.background = GREENYELLOW;
+        randomModeBtn.style.background = WHITE;
         randomModeBtn.style.color = BLACK;
     };
 });
