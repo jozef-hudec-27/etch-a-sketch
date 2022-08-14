@@ -10,7 +10,7 @@ body {
     font-family: Silkscreen, cursive;
     align-items: center;
     flex-direction: column;
-    background-color: black;
+    background-color: #000000;
 }
 
 .main {
@@ -21,7 +21,7 @@ body {
 
 h1 {
     margin: 0;
-    color: greenyellow;
+    color: #adff2f;
 }
 
 #main-grid {
@@ -36,7 +36,7 @@ h1 {
 }
 
 #settings-panel {
-    background-color: greenyellow;
+    background-color: #adff2f;
     border-right: 0px;
     box-sizing: content-box;
     display: flex;
@@ -61,7 +61,7 @@ button, input[type="range"], input[type="color"] {
 }
 
 #eraser-btn, #color-grabber-btn {
-    background-color: red;
+    background-color: #ff0000;
     color: #ffffff;
 }
 
@@ -86,7 +86,7 @@ button:hover {
 
 .btn-group-btn {
     font-family: Silkscreen, cursive;
-    border: 1px solid black; 
+    border: 1px solid #000000; 
     padding: 10px 24px; 
 }
 
@@ -97,7 +97,7 @@ button:hover {
 
 .btn-group-btn:last-child {
     background-color: rgb(230, 230, 230);
-    color: black;
+    color: #000000;
 }
 
 
@@ -183,7 +183,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .toggle-tile-border-container input[type="checkbox"]:focus + label::before {
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 10px #000000;
 }
 
 .toggle-tile-border-container label:hover::before,
