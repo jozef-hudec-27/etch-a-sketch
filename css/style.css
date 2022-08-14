@@ -21,11 +21,13 @@ input, label {
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 5px 5px #006400;
 }
 
 h1 {
     margin: 0;
     color: #adff2f;
+    text-shadow: 5px 5px #006400;
 }
 
 #main-grid {
