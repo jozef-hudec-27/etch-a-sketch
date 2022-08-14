@@ -1,4 +1,4 @@
-const MAIN_GRID_WIDTH = 700;
+const MAIN_GRID_WIDTH = 650;
 
 let gridHeight = 16;
 let newSquareWidth = MAIN_GRID_WIDTH / gridHeight; 
@@ -124,7 +124,7 @@ randomModeBtn.addEventListener('click', () => {
                                                                  rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%,\
                                                                  rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%)";
     } else {
-        randomModeBtn.style.background = '#ffffff';
+        randomModeBtn.style.background = '#adff2f';
     };
 });
 

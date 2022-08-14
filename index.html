@@ -14,39 +14,44 @@
     <title>EZ-Sketch</title> 
 </head>
 <body>
-    <div id="settings-panel">
-        <label for="toggle-tile-border">Show grid lines
-            <input type="checkbox" id="toggle-tile-border" checked>
-        </label>
+    <h1>EZ-Sketch</h1>
 
-        <label for="grid-size-range">Grid size <span id="cur-grid-size" style="font-size: 12px;">16x16</span>
-            <input type="range" id="grid-size-range" min="1" max="64" value="16">
-        </label>
+    <div class="main">
+        <div id="settings-panel">
+            <div class="toggle-tile-border-container">
+                <input type="checkbox" id="toggle-tile-border" checked>
+                <label for="toggle-tile-border">Show grid lines</label>
+            </div>
 
-        <label for="pen-color-picker">Pen color
-            <input type="color" id="pen-color-picker">
-        </label>
+            <label for="grid-size-range">Grid size <span id="cur-grid-size" style="font-size: 12px;">16x16</span>
+                <input type="range" id="grid-size-range" min="1" max="64" value="16">
+            </label>
+            
+            <label for="pen-color-picker">Pen color
+                <input type="color" id="pen-color-picker">
+            </label>
 
-        <label for="bg-color-picker">BG color
-            <input type="color" id="bg-color-picker" value="#ffffff">
-        </label>
-
-        <button id="eraser-btn">Eraser</button>
-
-        <button id="color-grabber-btn">Color grabber</button>
-
-        <button id="clear-grid-btn">Clear</button>
-
-        <button id="random-mode-btn">Random mode</button>
-
-        <div class="btn-group">
-            <button class="btn-group-btn shade">Shade</button>
-            <button class="btn-group-btn lighten">Lighten</button>
+            <label for="bg-color-picker">BG color
+                <input type="color" id="bg-color-picker" value="#ffffff">
+            </label>
+            
+            <button id="eraser-btn">Eraser</button>
+            
+            <button id="color-grabber-btn">Color grabber</button>
+            
+            <button id="clear-grid-btn">Clear</button>
+            
+            <button id="random-mode-btn">Random mode</button>
+            
+            <div class="btn-group">
+                <button class="btn-group-btn shade">Shade</button>
+                <button class="btn-group-btn lighten">Lighten</button>
+            </div>
         </div>
-    </div>
-
-    <div class="outer-grid-container">
-        <div id="main-grid">
+        
+        <div class="outer-grid-container">
+            <div id="main-grid">
+            </div>
         </div>
     </div>
 </body>
