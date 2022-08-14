@@ -17,7 +17,7 @@ const gridEl = document.getElementById('main-grid');
 gridEl.style.width = `${MAIN_GRID_WIDTH+1}px`;
 gridEl.style.height = `${MAIN_GRID_WIDTH}px`;
 
-const settingsPanelEl = document.getElementById('settings-panel')
+const settingsPanelEl = document.getElementById('settings-panel');
 settingsPanelEl.style.height = `${MAIN_GRID_WIDTH}px`;
 settingsPanelEl.style.width = `${MAIN_GRID_WIDTH/3}px`;
 
@@ -41,7 +41,7 @@ tileBorderCheck.addEventListener('change', e => {
     Array.from(tiles).forEach(tile => {
         tile.style.border = check ? `1px solid ${BLACK}` : '';
     });
-})
+});
 
 const gridSizePicker = document.getElementById('grid-size-range');
 const currentGridSizeText = document.getElementById('cur-grid-size');
@@ -51,7 +51,7 @@ gridSizePicker.addEventListener('change', e => {
     newSquareWidth = MAIN_GRID_WIDTH / newGridHeight;
     gridHeight = newGridHeight ** 2;
 
-    const currentTiles = document.getElementsByClassName('tile') ;
+    const currentTiles = document.getElementsByClassName('tile');
     Array.from(currentTiles).forEach(tile => {
         tile.parentNode.removeChild(tile);
     });
@@ -74,9 +74,9 @@ bgColorPicker.addEventListener('input', e => {
     const newBgColor = e.target.value;
     bgColor = newBgColor;
     
-    const clearGridBtn = document.getElementById('clear-grid-btn')
+    const clearGridBtn = document.getElementById('clear-grid-btn');
     
-    const colorRatio = calculateColorRatio(bgColor, clearGridBtn.style.color)
+    const colorRatio = calculateColorRatio(bgColor, clearGridBtn.style.color);
 
     if (colorRatio >= 0.22) { // it's at a bad level
         clearGridBtn.style.color = clearGridBtn.style.color === 'rgb(0, 0, 0)' ? WHITE : BLACK;
@@ -213,7 +213,7 @@ function createTiles(gridHeight, squareWidth) {
             if (isGrabbingColor) {
                 penColor = newSquare.style.backgroundColor;
 
-                let { r, g, b } = extractRgb(penColor)
+                let { r, g, b } = extractRgb(penColor);
 
                 penColorPicker.value = rgbToHex(+r, +g, +b);
                 isGrabbingColor = false;
@@ -244,7 +244,7 @@ function rgbToHex(r, g, b) {
 function shadeSquare(squareNode) {
     const currentColor = squareNode.style.backgroundColor;
 
-    let { r, g, b } = extractRgb(currentColor)
+    let { r, g, b } = extractRgb(currentColor);
     r -= 10; g -= 10; b -= 10;
 
     squareNode.style.backgroundColor = `rgb(${r > 0 ? r : 0}, ${g > 0 ? g : 0}, ${b > 0 ? b : 0})`;
@@ -253,7 +253,7 @@ function shadeSquare(squareNode) {
 function lightenSquare(squareNode) {
     const currentColor = squareNode.style.backgroundColor;
 
-    let { r, g, b } = extractRgb(currentColor)
+    let { r, g, b } = extractRgb(currentColor);
     r += 10; g += 10; b += 10;
 
     squareNode.style.backgroundColor = `rgb(${r < 255 ? r : 255}, ${g < 255 ? g : 255}, ${b < 255 ? b : 255})`;
