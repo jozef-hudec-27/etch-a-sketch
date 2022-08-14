@@ -202,8 +202,6 @@ function createTiles(gridHeight, squareWidth) {
         });
 
         newSquare.addEventListener('click', () => {
-            console.dir(newSquare);
-
             if (isGrabbingColor) {
                 penColor = newSquare.style.backgroundColor;
 
