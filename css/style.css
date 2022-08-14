@@ -27,7 +27,7 @@ h1 {
 #main-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-content: space-between;
 }
 
@@ -48,7 +48,6 @@ h1 {
 
 button:not(.btn-group-btn) {
     width: 50%;
-    border-radius: 10px;
     border: 2px solid #000000;
     font-family: Silkscreen, cursive;
 }
@@ -94,15 +93,11 @@ button:hover {
 .btn-group-btn:first-child {
     background-color: rgb(100, 100, 100);
     color: white;
-    border-start-start-radius: 20px;
-    border-end-start-radius: 20px;
 }
 
 .btn-group-btn:last-child {
     background-color: rgb(230, 230, 230);
     color: black;
-    border-end-end-radius: 20px;
-    border-start-end-radius: 20px;
 }
 
 

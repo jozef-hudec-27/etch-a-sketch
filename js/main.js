@@ -1,14 +1,11 @@
 const MAIN_GRID_WIDTH = 650;
 
 let gridHeight = 16;
-let newSquareWidth = MAIN_GRID_WIDTH / gridHeight; 
+let newSquareWidth = MAIN_GRID_WIDTH / gridHeight;  
 gridHeight *= gridHeight;
 
-const outerGridContainerEl = document.querySelector('.outer-grid-container');
-outerGridContainerEl.style.height = `${MAIN_GRID_WIDTH}px`;
-
 const gridEl = document.getElementById('main-grid');
-gridEl.style.width = `${MAIN_GRID_WIDTH}px`;
+gridEl.style.width = `${MAIN_GRID_WIDTH+1}px`;
 gridEl.style.height = `${MAIN_GRID_WIDTH}px`;
 
 const settingsPanelEl = document.getElementById('settings-panel')
@@ -123,8 +120,10 @@ randomModeBtn.addEventListener('click', () => {
                                                                  rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%,\
                                                                  rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%,\
                                                                  rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%)";
+        randomModeBtn.style.color = '#ffffff'
     } else {
         randomModeBtn.style.background = '#adff2f';
+        randomModeBtn.style.color = '#000000'
     };
 });
 
