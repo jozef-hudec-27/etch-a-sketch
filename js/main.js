@@ -1,12 +1,12 @@
 const MAIN_GRID_WIDTH = 650;
 
-const BLACK = '#000000'
-const WHITE = '#ffffff'
-const GREENYELLOW = '#adff2f'
-const RED = '#ff0000'
-const LIGHTGREEN = '#90ee90'
-const LIGHTGREY_RGB = 'rgb(230, 230, 230)'
-const DARKGEY_RGB = 'rgb(100, 100, 100)'
+const BLACK = '#000000';
+const WHITE = '#ffffff';
+const GREENYELLOW = '#adff2f';
+const RED = '#ff0000';
+const LIGHTGREEN = '#90ee90';
+const LIGHTGREY_RGB = 'rgb(230, 230, 230)';
+const DARKGEY_RGB = 'rgb(100, 100, 100)';
 
 
 let gridHeight = 16;
@@ -30,28 +30,28 @@ let isShading = false;
 let isLightening = false;
 
 let tiles;
-const tileBorderCheck = document.getElementById('toggle-tile-border')
+const tileBorderCheck = document.getElementById('toggle-tile-border');
 tileBorderCheck.addEventListener('change', e => {
     if (!tiles) {
         tiles = document.getElementsByClassName('tile'); 
     };
 
-    let check = e.target.checked
+    let check = e.target.checked;
 
     Array.from(tiles).forEach(tile => {
-        tile.style.border = check ? `1px solid ${BLACK}` : ''
-    })
+        tile.style.border = check ? `1px solid ${BLACK}` : '';
+    });
 })
 
 const gridSizePicker = document.getElementById('grid-size-range');
-const currentGridSizeText = document.getElementById('cur-grid-size')
+const currentGridSizeText = document.getElementById('cur-grid-size');
 gridSizePicker.addEventListener('change', e => {
     let newGridHeight = e.target.value;
 
-    newSquareWidth = MAIN_GRID_WIDTH / newGridHeight
-    gridHeight = newGridHeight ** 2
+    newSquareWidth = MAIN_GRID_WIDTH / newGridHeight;
+    gridHeight = newGridHeight ** 2;
 
-    const currentTiles = document.getElementsByClassName('tile') 
+    const currentTiles = document.getElementsByClassName('tile') ;
     Array.from(currentTiles).forEach(tile => {
         tile.parentNode.removeChild(tile);
     });
@@ -71,10 +71,10 @@ penColorPicker.addEventListener('change', e => {
 
 const bgColorPicker = document.getElementById('bg-color-picker');
 bgColorPicker.addEventListener('input', e => {
-    const newBgColor = e.target.value
-    bgColor = newBgColor
+    const newBgColor = e.target.value;
+    bgColor = newBgColor;
 
-    document.getElementById('clear-grid-btn').style.backgroundColor = bgColor
+    document.getElementById('clear-grid-btn').style.backgroundColor = bgColor;
 
     const currentTiles = document.getElementsByClassName('tile') ;
     Array.from(currentTiles).forEach(tile => {
@@ -87,37 +87,37 @@ eraserBtn.addEventListener('click', () => {
     isErasing = !isErasing;
 
     if (isErasing) {
-        eraserBtn.style.backgroundColor = LIGHTGREEN
-        eraserBtn.style.color = BLACK
+        eraserBtn.style.backgroundColor = LIGHTGREEN;
+        eraserBtn.style.color = BLACK;
     } else {
-        eraserBtn.style.backgroundColor = RED
-        eraserBtn.style.color = WHITE
+        eraserBtn.style.backgroundColor = RED;
+        eraserBtn.style.color = WHITE;
         
     };
 });
 
 const colorGrabberBtn = document.getElementById('color-grabber-btn');
 colorGrabberBtn.addEventListener('click', () => {
-    isGrabbingColor = !isGrabbingColor
+    isGrabbingColor = !isGrabbingColor;
 
     if (isGrabbingColor) {
-        colorGrabberBtn.style.backgroundColor = LIGHTGREEN
-        colorGrabberBtn.style.color = BLACK
+        colorGrabberBtn.style.backgroundColor = LIGHTGREEN;
+        colorGrabberBtn.style.color = BLACK;
     } else {
-        colorGrabberBtn.style.backgroundColor = RED
-        colorGrabberBtn.style.color = WHITE
+        colorGrabberBtn.style.backgroundColor = RED;
+        colorGrabberBtn.style.color = WHITE;
     };
 });
 
 const clearGridBtn = document.getElementById('clear-grid-btn');
 clearGridBtn.addEventListener('click', () => {
-    const currentTiles = document.getElementsByClassName('tile') ;
+    const currentTiles = document.getElementsByClassName('tile');
     Array.from(currentTiles).forEach(tile => {
         tile.style.backgroundColor = bgColor;
     });
 });
 
-const randomModeBtn = document.getElementById('random-mode-btn')
+const randomModeBtn = document.getElementById('random-mode-btn');
 randomModeBtn.addEventListener('click', () => {
     isShading = false; shadeBtn.style.backgroundColor = DARKGEY_RGB;
     isLightening = false; lightenBtn.style.backgroundColor = LIGHTGREY_RGB;
@@ -129,10 +129,10 @@ randomModeBtn.addEventListener('click', () => {
                                                                  rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%,\
                                                                  rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%,\
                                                                  rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%)";
-        randomModeBtn.style.color = WHITE
+        randomModeBtn.style.color = WHITE;
     } else {
         randomModeBtn.style.background = GREENYELLOW;
-        randomModeBtn.style.color = BLACK
+        randomModeBtn.style.color = BLACK;
     };
 });
 
@@ -157,7 +157,7 @@ lightenBtn.addEventListener('click', () => {
     isShading = false;
 
     if (isLightening) {
-        lightenBtn.style.backgroundColor = 'rgb(255, 255, 255)'
+        lightenBtn.style.backgroundColor = 'rgb(255, 255, 255)';
     } else {
         lightenBtn.style.backgroundColor = LIGHTGREY_RGB;
     };
@@ -174,15 +174,15 @@ function createTiles(gridHeight, squareWidth) {
         newSquare.style.width = `${squareWidth}px`;
         newSquare.style.height = `${squareWidth}px`;
         newSquare.style.border = tileBorderCheck.checked && `1px solid ${BLACK}`;
-        newSquare.style.backgroundColor = bgColor
-        newSquare.classList.add('tile')
+        newSquare.style.backgroundColor = bgColor;
+        newSquare.classList.add('tile');
     
         newSquare.addEventListener('mouseover', (e) => {
             if (e.buttons && !isGrabbingColor) {
                 if (isShading) {
                     shadeSquare(newSquare);
                 } else if (isLightening) {
-                    lightenSquare(newSquare)
+                    lightenSquare(newSquare);
                 } else {
                     newSquare.style.backgroundColor = isErasing ? bgColor : randomColorMode ? getRandomHexColor() : penColor;
                 };
@@ -194,28 +194,28 @@ function createTiles(gridHeight, squareWidth) {
                 if (isShading) {
                     shadeSquare(newSquare);
                 } else if (isLightening) {
-                    lightenSquare(newSquare)
+                    lightenSquare(newSquare);
                 } else {
                     newSquare.style.backgroundColor = isErasing ? bgColor : randomColorMode ? getRandomHexColor() : penColor;
                 };
-            }
+            };
         });
 
         newSquare.addEventListener('click', () => {
-            console.dir(newSquare)
+            console.dir(newSquare);
 
             if (isGrabbingColor) {
                 penColor = newSquare.style.backgroundColor;
 
-                let x = penColor.split(' ')
+                let x = penColor.split(' ');
                 let r = x[0].slice(4, x[0].length - 1);
                 let g = x[1].slice(0, x[1].length - 1);
                 let b = x[2].slice(0, x[2].length - 1);
 
                 penColorPicker.value = rgbToHex(+r, +g, +b);
                 isGrabbingColor = false;
-                colorGrabberBtn.style.backgroundColor = RED
-                colorGrabberBtn.style.color = WHITE
+                colorGrabberBtn.style.backgroundColor = RED;
+                colorGrabberBtn.style.color = WHITE;
             };
         });
     
@@ -239,23 +239,23 @@ function rgbToHex(r, g, b) {
 };
 
 function shadeSquare(squareNode) {
-    const currentColor = squareNode.style.backgroundColor
+    const currentColor = squareNode.style.backgroundColor;
 
-    let x = currentColor.split(' ')
+    let x = currentColor.split(' ');
     let r = +x[0].slice(4, x[0].length - 1) - 10 || 0;
     let g = +x[1].slice(0, x[1].length - 1) - 10 || 0;
     let b = +x[2].slice(0, x[2].length - 1) - 10 || 0;
 
-    squareNode.style.backgroundColor = `rgb(${r > 0 ? r : 0}, ${g > 0 ? g : 0}, ${b > 0 ? b : 0})`
+    squareNode.style.backgroundColor = `rgb(${r > 0 ? r : 0}, ${g > 0 ? g : 0}, ${b > 0 ? b : 0})`;
 };
 
 function lightenSquare(squareNode) {
-    const currentColor = squareNode.style.backgroundColor
+    const currentColor = squareNode.style.backgroundColor;
 
-    let x = currentColor.split(' ')
+    let x = currentColor.split(' ');
     let r = +x[0].slice(4, x[0].length - 1) + 10 ;
     let g = +x[1].slice(0, x[1].length - 1) + 10;
     let b = +x[2].slice(0, x[2].length - 1) + 10;
 
-    squareNode.style.backgroundColor = `rgb(${r < 255 ? r : 255}, ${g < 255 ? g : 255}, ${b < 255 ? b : 255})`
+    squareNode.style.backgroundColor = `rgb(${r < 255 ? r : 255}, ${g < 255 ? g : 255}, ${b < 255 ? b : 255})`;
 };
